@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | Mon profil {% endblock %}
+
+{% block body %}
+
+    <header>
+        {% include "nav.html.twig" %}
+    </header>
+
+    <div id='profil_img'></div>
+
+    <section id='profil_container'>
+        <h1 id='h1_profil'>Mon profil</h1>
+        <div class="profil_unchanged">
+            <div class='profil_unchanged_input'>
+                <p class='profil_input input_disabled'>{{ app.user.nom|capitalize }}</p>
+                <p class='profil_input input_disabled'>{{ app.user.prenom|capitalize }}</p>
+            </div>
+        </div>
+
+        <h2 id='h1_profil'>Mes coordonées</h2>
+
+        <div class="profil_changed">
+            <div class='profil_changed_input'>
+            <div style='display:flex'>
+                <input class='profil_input' value='{{ app.user.ville }}'></input>
+                <input class='profil_input'value='{{ app.user.codePostal }}'></input>
+            </div>
+                <input class='profil_input'value='{{ app.user.adresse }}'></input>
+            </div>
+        </div>
+    </section>
+
+
+
+{% endblock %}

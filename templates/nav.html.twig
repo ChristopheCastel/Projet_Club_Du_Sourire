@@ -1,0 +1,65 @@
+<nav>
+
+  <div class='logo'>
+    <a href="{{ path('app_home') }}">
+    <img src="{{ asset('images/LogoNav.png') }}" width='150px' height='130px' alt="logo club du sourire">
+    </a>
+  </div>
+
+
+  <div id="nav_btn_container">
+    
+
+    {% if app.user %}
+
+      <div class='connected_btn'>
+
+        <div class="nav_modal dropdown_toOpen">Nos activités<i class="fa-solid fa-caret-down fa-lg"></i>
+            <ul class="nav_modal_container nav_modal_container--animated dropdown_nav">
+              <li><a href="{{ path('app_evenements_index') }}">Toutes nos activités</a></li>
+              {% for categorie in categories %}
+
+                <li><a href="{{path('app_evenements_index',{'cat': categorie.titre})}}">{{categorie.titre}}</a></li>
+
+              {% endfor %}
+            </ul>
+        </div>
+        <p class="nav_accueil">Bonjour {{ app.user.prenom }}</p>
+
+        <div class='connected_btn_inner'>
+          {% if is_granted('ROLE_ADMIN') %}
+
+            <a class="nav_btn nav_admin" href="{{ path('app_admin_home') }}">Espace Admin</a>
+
+          {% endif %}
+
+          <a class="nav_btn profil_btn" href="{{ path('app_profil') }}">Mon profil</a>
+          
+          <a id="nav_btn_deconnexion" href="{{ path('app_logout') }}">Déconnexion</a>
+
+        </div>
+      </div>
+    
+    {% else %}
+
+        <div class="nav_modal dropdown_toOpen">Nos activités<i class="fa-solid fa-caret-down fa-lg"></i>
+            <ul class="nav_modal_container nav_modal_container--animated dropdown_nav">
+              <li>Toutes nos activités</li>
+              {% for categorie in categories %}
+                <li>{{categorie.titre}}</li>
+              {% endfor %} 
+            </ul>
+        </div>
+        
+        <div class='disconected_nav'>
+          <p class="nav_btn open_login">Se connecter</p>
+
+          <p class="nav_btn open_register">S'inscrire</p>
+        </div>
+    {% endif %}
+
+  
+
+  </div>
+
+</nav>

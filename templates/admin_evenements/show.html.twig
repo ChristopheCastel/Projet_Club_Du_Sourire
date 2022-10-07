@@ -1,0 +1,64 @@
+{% extends 'admin.base.html.twig' %}
+
+{% block title %}Evenements{% endblock %}
+
+{% block h2 %}Évènement : {{ evenement.titre }}{% endblock %}
+
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ evenement.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ evenement.titre }}</td>
+            </tr>
+            <tr>
+                <th>Lieux</th>
+                <td>{{ evenement.lieux }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ evenement.date|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ evenement.prix }}</td>
+            </tr>
+            <tr>
+                <th>Place_disponible</th>
+                <td>{{ evenement.placeDisponible }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ evenement.description }}</td>
+            </tr>
+            <tr>
+                <th>Kilometre</th>
+                <td>{{ evenement.kilometre }}</td>
+            </tr>
+            <tr>
+                <th>Duree_estimee</th>
+                <td>{{ evenement.dureeEstimee }}</td>
+            </tr>
+            <tr>
+                <th>Document</th>
+                <td>{{ evenement.document }}</td>
+            </tr>
+            <tr>
+                <th>Images</th>
+                <td><img src="{{ asset("images/upload/" ~ evenement.images) }}" alt="" width="100px"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" role="button" href="{{ path('app_admin_evenements_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+
+        <a class="btn btn-success" role="button" href="{{ path('app_admin_evenements_edit', {'id': evenement.id}) }}">Modifier</a>
+
+        {{ include('admin_evenements/_delete_form_btn.html.twig') }}
+    </div>
+{% endblock %}

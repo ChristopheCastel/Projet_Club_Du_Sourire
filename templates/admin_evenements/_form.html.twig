@@ -1,0 +1,72 @@
+<a class="btn btn-primary mb-3" role="button" href="{{ path('app_admin_evenements_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+
+<div class="col-xs-12 col-lg-8 col-xxl-6 shadow p-4 my-3 bg-body rounded">
+    
+            {{ form_start(form) }}
+
+                {{ form_row(form.titre) }}
+                {{ form_row(form.categorie) }}
+                {{ form_row(form.lieux) }}
+                {{ form_row(form.date) }}
+                {{ form_row(form.prix) }}
+                {{ form_row(form.place_disponible) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.kilometre ) }}
+                {{ form_row(form.duree_estimee ) }}
+
+                {% if form.imageUpdate is defined %}
+                
+                    {{ form_row(form.imageUpdate) }}
+                
+                    <div class="text-center" id="zoneImg">
+
+                        {% if evenement.images %}
+
+                            <img src="{{ asset('images/upload/' ~ evenement.images) }}"  width="300px" alt="">
+
+                            <a href="{{ path("image_supprimer", {"id" : evenement.id }) }}"
+                            onclick="return confirm('Souhaitez-vous vraiment supprimer cette image ?');">
+                            <i class="fa-solid fa-trash-can text-danger"></i>
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                {% elseif form.images is defined %}
+
+                        {{ form_row(form.images) }}
+                        <div class="text-center" id="zoneImg">
+                        </div>
+                        
+                {% endif %}
+
+                {% if form.documentUpdate is defined %}
+                
+                    {{ form_row(form.documentUpdate) }}
+         
+                        {% if evenement.document %}
+                            <div class="d-flex justify-content-center">
+                                <i class="bi bi-filetype-pdf me-3"></i>
+                                <div id="zoneTitreDocument" class="d-flex">
+                                    <p>{{ evenement.document }}</p>
+                                    
+                                    <a href="{{ path("document_supprimer", {"id" : evenement.id }) }}"
+                                    onclick="return confirm('Souhaitez-vous vraiment supprimer ce document ?');">
+                                    <i class="fa-solid fa-trash-can text-danger ms-3"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                {% elseif form.document is defined %}
+
+                        {{ form_row(form.document) }}
+                                
+                {% endif %}    
+
+                <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+
+            {{ form_end(form) }}
+    
+</div>

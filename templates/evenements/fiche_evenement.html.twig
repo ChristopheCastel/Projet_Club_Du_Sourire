@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | {{ evenement.titre }}{% endblock %}
+
+{% block body %}
+
+    <header>
+        {% include "nav.html.twig" %}
+    </header>
+
+    <div class="{{ container_image }}" aria-hidden="true" style='background-image: url("{{ backgroundImageCat }}")'>
+        
+            <div class="container_image_titre">{{ container_image_titre|upper }}</div>
+        
+    </div>
+
+    
+    <div class="containerFiche">
+
+        <div class="ficheContenu">
+
+
+            <div class="ficheContenuLeft">
+
+                <h3 id="h3Fiche">{{ evenement.titre }}</h3>
+
+                {# <div class="ficheContenuLeftText"> #}
+                    {# <p>{{ evenement.date|date('d-m-Y') }}</p>
+                    <p>{{ evenement.lieux }}</p>
+                    <p>{{ evenement.prix }}</p>
+                    <p>{{ evenement.placeDisponible }}</p>
+                    <p>{{ evenement.description }}</p>
+                    <p>{{ evenement.kilometre }}</p>
+                    <p>{{ evenement.dureeEstimee }}</p> #}
+                    <table class="ficheContenuLeftText">
+                        <tbody class="ficheContenuLeftTextTbody">
+                            <tr>
+                                <th>Date</th>
+                                <td>{{ evenement.date|date('d-m-Y') }}</td>
+                            </tr>
+                            <tr>
+                                <th>Lieux</th>
+                                <td>{{ evenement.lieux }}</td>
+                            </tr>
+                            
+                            <tr>
+                                <th>Prix</th>
+                                <td>{{ evenement.prix }} €</td>
+                            </tr>
+                            <tr>
+                                <th>Place disponible</th>
+                                <td>{{ evenement.placeDisponible }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ evenement.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Kilometre</th>
+                                <td>{{ evenement.kilometre }}</td>
+                            </tr>
+                            <tr>
+                                <th>Duree estimée</th>
+                                <td>{{ evenement.dureeEstimee }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                {# </div> #}
+            </div>
+
+            <div class="ficheContenuRight">
+                <img class="ficheContenuRightImage" src="{{ asset("images/upload/" ~ evenement.images) }}" alt="">
+      
+                {% if evenement.document %}
+                    <div class="linkDownloadContent">
+
+                        <a class="linkDownload linkDownloadShow" href="{{ asset('document/upload/' ~ evenement.document) }}">Voir la plaquette</a>
+                        <a class="linkDownload linkDownloadFile" href="{{ asset('document/upload/' ~ evenement.document) }}" download="{{ evenement.document }}">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+                                <p class="linkDownloadText">{{ evenement.document }}</p>
+                                <p>Télécharger le fichier</p>
+                            </div>
+                        </a>
+                    </div>
+                
+                {% endif %}
+
+                <div class="btnBackContent">
+                    <a class="btnBack" role="button" href="{{ path('app_evenements_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+    
+{% endblock %}

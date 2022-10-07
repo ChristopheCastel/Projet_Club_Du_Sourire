@@ -1,0 +1,129 @@
+{% extends 'admin.base.html.twig' %}
+
+{% block title %}{{ parent() }} | Gestion des Évènements{% endblock %}
+
+{% block h2 %}Gestion des Évènements{% endblock %}
+
+{% block body %}
+
+    {% include "flashes.html.twig" %}
+
+    <a class="btn btn-success" href="{{ path('app_admin_evenements_new') }}">Ajouter +</a>
+
+{% if evenements %}  
+
+    {# <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+
+        <a href="{{path('app_admin_evenements_index')}}"><input type="radio" class="btn-check" name="btnradio" id="allEventCat" autocomplete="off" checked>
+        <label class="btn btn-info" for="allEventCat">Toutes catégories</label>
+        </a>
+
+        {% for cat in categories %}
+        
+        <a href="{{path('app_admin_evenements_index',{'cat': cat.titre})}}">
+        <input type="radio" class="btn-check" name="btnradio" id="{{cat.titre}}" autocomplete="off">
+        <label class="btn btn-outline-primary" for="{{cat.titre}}">Catégorie {{cat.titre}}</label>
+        </a>
+
+        {% endfor %}
+   
+    </div> #}
+
+        <div class="btn-group toggle button group" role="group" >
+
+            <a class="btn btn-info" href="{{path('app_admin_evenements_index')}}">Tous</a>
+
+            {% for cat in categories %}
+
+                <a class="btn btn-outline-primary" href="{{path('app_admin_evenements_GroupeEvenement',{'cat': cat.titre})}}">{{cat.titre}}</a>
+                
+            {% endfor %}
+            
+        </div>
+        {# a voir si on utilise ça ####################}
+        {% for categorie in categories %}
+                
+                        <a class="btn btn-warning" href="{{ path('app_admin_categorie_show', {'id': categorie.id}) }}">{{ categorie.titre }}</a>
+                        <span class="mx-2">|</span>                   
+                   
+        {% endfor %}    
+        {# ############################################}
+
+         
+            {# <a class="btn btn-info" href="{{path('app_admin_evenements_index')}}">Toutes catégories</a>
+
+            {% for cat in listCategorieEvenement %}
+
+                <a class="btn btn-primary" href="{{path('app_admin_evenements_index',{'cat': cat.titre})}}">Catégorie {{cat.titre}}</a>
+                
+            {% endfor %} #}
+    
+        <table class="table table-hover text-center mt-4 shadow-sm p-3 mb-5 bg-body rounded">
+            <thead class="table-info align-middle">
+                <tr>
+                    {# <th>Id</th> #}
+                    <th width="100px">Date</th>
+                    <th>Catégorie</th>
+                    <th>Titre</th>
+                    <th>Lieux</th>
+                    <th>Prix (€)</th>
+                    <th>Place disponible</th>
+                    <th>Description</th>
+                    <th>Kilomètre</th>
+                    <th>Durée estimée</th>
+                    <th>Document</th>
+                    <th>Image(s)</th>
+                    <th>Actions</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for evenement in evenements %}
+
+                {% if evenement.date <  date('now') %}
+                    
+                <tr class="DatePassee">
+
+                {% else %}
+
+                <tr>      
+                  
+                {% endif %}
+                
+                    {# <td>{{ evenement.id }}</td> #}
+                    <td>{{ evenement.date|date('d-m-Y') }}</td>
+                    <td>{{ evenement.categorie.titre}}</td>
+                    <td>{{ evenement.titre }}</td>
+                    <td>{{ evenement.lieux }}</td>                    
+                    <td>{{ evenement.prix }}</td>
+                    <td>{{ evenement.placeDisponible }}</td>
+                    <td id='admin_event_description'>{{ evenement.description }}</td>
+                    <td>{{ evenement.kilometre }}</td>
+                    <td>{{ evenement.dureeEstimee }}</td>
+                    <td>{{ evenement.document }}</td>
+                    <td>
+                        <img src="{{ asset("images/upload/" ~ evenement.images) }}" alt="" width="100px">
+                    </td>                  
+                    <td>
+                        <div class="d-flex">
+                            <a href="{{ path('app_admin_evenements_show', {'id': evenement.id}) }}"><i class="fa-solid fa-magnifying-glass"></i></a>
+                            <span class="mx-2">|</span> 
+                            <a href="{{ path('app_admin_evenements_edit', {'id': evenement.id}) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </div>
+                    </td>
+                    <td class="pt-0">
+                        {{ include('admin_evenements/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% else %}{# s'il n'y a pas d'évènement' en bdd #}
+        <h4 class="text-danger text-center fst-italic mt-3">Il n'y a aucune activité pour le moment</h4>
+        <div class="d-flex justify-content-center my-5">
+            <a class="btn btn-primary" role="button" href="{{ path('app_admin_evenements_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    {% endif %}    
+
+{% endblock %}

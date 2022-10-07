@@ -1,0 +1,80 @@
+{% extends 'admin.base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block h2 %}{{ user.prenom ~ "  " ~ user.nom}}{% endblock %}
+
+{% block body %}
+    
+    <div class="col-xs-12 col-lg-6 shadow p-3 mb-4 bg-body rounded">
+        <div class="row">   
+            <table class="table table-hover col-xs-12 col-lg-6 ">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ user.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ user.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ user.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ user.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Ville</th>
+                        <td>{{ user.ville }}</td>
+                    </tr>
+                    <tr>
+                        <th>Code_postal</th>
+                        <td>{{ user.codePostal }}</td>
+                    </tr>
+                    <tr>
+                        <th>Annee_de_naissance</th>
+                        <td>{{ user.anneeDeNaissance|date('Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Telephone</th>
+                        <td>{{ user.telephone|slice(0, 2) ~ " " ~ user.telephone|slice(2, 2) ~ " " ~ user.telephone|slice(4, 2) ~ " " ~ user.telephone|slice(6, 2) ~ " " ~ user.telephone|slice(8, 2) ~ " "}}</td>
+                    </tr>
+                    <tr>
+                        <th>Annee_adhesion</th>
+                        <td>{{ user.anneeAdhesion ? user.anneeAdhesion|date('Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Roles</th>
+                        <td>{% for role in app.user.roles %}
+                                {% if role == "ROLE_ADMIN" %}
+                                    ADMIN
+                                    {% elseif role == "ROLE_USER" %}
+                                        USER
+                                {% endif %}
+                                {# {{ role }} #}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}             
+                        </td>
+                    </tr>
+                    {# <tr>
+                        <th>Password</th>
+                        <td>{{ user.password }}</td>
+                    </tr> #}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a class="btn btn-primary" role="button" href="{{ path('app_admin_user_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+
+    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('admin_user/_delete_form.html.twig') }}
+{% endblock %}

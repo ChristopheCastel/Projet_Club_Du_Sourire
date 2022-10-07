@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}{% endblock %}
+
+{% block body %}
+
+    <div id="login_modal_container">
+
+        <div id='loginRegister_modal'>
+            <div class="WayToCloseModal"></div>
+            <div id="login_modal">
+                <i id='close_login_modal' class="fa-solid fa-plus fa-2xl">
+                    <div id='close_login_modal_border'></div>
+                </i>
+                {% include "security/login.html.twig" %}
+                
+                <div id='login_modal_footer'>
+                    <div class="line"></div>
+                    <p>Pas encore inscrit(e) ?<span id='click_here_login'> Cliquez ici<span></p>
+                </div>
+            </div>
+
+            <div id="register_modal">
+
+                <div id='register_modal_footer'>
+                    <p>Déjà membre ?<span id='click_here_register'> Cliquez ici<span></p>
+                    <div class="line"></div>
+                </div>
+                <p class='h6'>S'inscrire</p>
+                <i id='close_register_modal' class="fa-solid fa-plus fa-2xl">
+                    <div id='close_register_modal_border'></div>
+                </i>
+                {% include "registration/register.html.twig" %}
+            </div>
+            
+        </div> 
+    </div>
+    
+    <header>
+        {% include "nav.html.twig" %}
+    </header>
+    
+    <div class="container container_image" aria-hidden="true"></div>
+
+    <main>
+        <section id='club_presentation'>
+
+            <h1>Club du sourire</h1>
+            <div id='presentation_container'>
+                <img id='autocar' src="{{asset('/images/car.png')}}" alt="autocar">
+                <p id="presentation_text">Son but est de créer un lien social à travers ces activités  qu’elle propose. Des séjours touristiques, sorties culturelles, voyages dans la convivialité. Des après midi ou matinée ludique comme la marche, jeux de cartes, pétanque. Chaque année elle organise un loto avec un déjauner pour le plaisir de tous.
+                </p>
+            </div>
+        </section>
+
+        <section id='categorie_presentation'>
+
+            {% if categories %}
+                
+                <a  class="cart_home thefirst" href="{{path('app_evenements_index',{'cat': categories[2].titre})}}" style='background-image: url("../images/uploadCategorie/{{ categories[2].image }}")'>
+                    <div class="cart_home_main">
+                   
+                            <h2>{{ categories[2].titre }} {# Sorties #}</h2>
+                            <div class="cart_home_description">
+                                <p>Nous proposons régulièrement des sorties petit budget pour le plaisir de tous. Visite de chateaux, dégustations, théatres, randonnées et bien plus encore.</p>
+                            </div>                   
+                    </div>
+                </a>
+            
+                <a  class="cart_home thesecond" href="{{path('app_evenements_index',{'cat': categories[0].titre})}}" style='background-image: url("../images/uploadCategorie/{{ categories[0].image }}")'>
+                    <div class="cart_home_main">
+                            <h2>{{ categories[0].titre }} {# Voyages #}</h2>
+                            <div class="cart_home_description">
+                                <p> </p>
+                            </div>
+                    </div>
+                </a>
+
+                <a class="cart_home thethird" href="{{path('app_evenements_index',{'cat': categories[1].titre})}}" style='background-image: url("../images/uploadCategorie/{{ categories[1].image }}")'>
+                    <div class="cart_home_main">
+                        
+                            <h2>{{ categories[1].titre }} {# Divers #}</h2>
+                            <div class="cart_home_description">
+                                <p> </p>
+                            </div>
+                        
+                    </div>
+                </a>
+            {% endif %}
+
+        </section>
+        
+
+        <section id='next_event_section'>
+            <div id='next_event'>
+                <div id="next_event_header">
+                    <p id='next_event_title'>Nos prochains Évènements :</p>
+                    <div id='see_all'>
+                        <a href="{{ path('app_evenements_index') }}">Voir tout</a>
+                    </div>
+                </div>
+
+                <div id="next_event_cart_container">
+                     
+                    {% if nextEvenements %}
+                            
+                        {% for nextEvenement in nextEvenements %}
+
+                            <div class="next_event_card">
+                                <a href="{{path('app_fiche_evenement',{'titre': nextEvenement.titre})}}">   
+
+                                    <div class="card_header">{{ nextEvenement.titre }}</div>
+                                    <div class="card_img">
+                                        <img src="{{ asset('images/upload/' ~ nextEvenement.images) }}">
+                                    </div>
+                                    <div class='date_event'>
+                                        <div>
+                                            <p>Le : {{ nextEvenement.date|date('d-m-Y') }}</p>
+                                        </div>
+                                    </div>         
+                                    <div class="line_2"></div>
+                                    <div class='card_details'>
+                                        <div class='card_details_inner'>
+                                            <div>{{ nextEvenement.date|date('d-m-Y') }}</div>
+                                            <div class="card_categorie">{{ nextEvenement.categorie.titre }}</div>
+                                            <div class="card_more">
+                                                <div class="card_description">{{ nextEvenement.description }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="card_price">
+                                            <p class='card_price_inner'>{{ nextEvenement.prix }}€</p>
+
+                                        </div>
+                                    </div>                 
+                                </a>
+                            </div>
+                        {% endfor %}
+                        
+                    {% else %}
+                        
+
+                        <a href="" class="next_event_card">
+                            <div class="card_header"></div>
+                            <div class="card_img" style='text-align:center;'><p id='zze'>Il n'y a pas d'évènement prévu prochainement pour le moment.</p></div>
+
+                            <div class="card_more">
+                                <div class="card_description"></div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+
+        </section>
+
+    </main>
+
+    {% include "footer.html.twig" %}
+
+
+{% endblock %}

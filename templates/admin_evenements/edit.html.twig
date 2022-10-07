@@ -1,0 +1,13 @@
+{% extends 'admin.base.html.twig' %}
+
+{% block title %}{{ parent() }} | Modifier l'évènement : {{ evenement.titre }}{% endblock %}
+
+{% block h2 %}Modifier l'évènement : {{ evenement.titre }}{% endblock %}
+
+{% block body %}
+
+    {{ include('admin_evenements/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    {{ include('admin_evenements/_delete_form.html.twig') }}
+    
+{% endblock %}

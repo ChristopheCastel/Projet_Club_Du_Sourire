@@ -1,0 +1,114 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}} | Nos Évènements{% endblock %}
+
+{% block body %}
+
+    <header>
+        {% include "nav.html.twig" %}
+    </header>
+    
+    <div class="{{ container_image }}" aria-hidden="true" style='background-image: url("{{ backgroundImageCat }}")'>
+
+        {% if container_image_titre_color_bluebold %}
+            <div class="container_image_titre {{ container_image_titre_color_bluebold }}">{{ container_image_titre|upper }}</div>
+        {% else %}
+            <div class="container_image_titre">{{ container_image_titre|upper }}</div>
+        {% endif %}
+        
+    </div>
+
+        <section class='event_section'>
+            <div class='event'>
+                <div class="event_header">
+                    <p class='event_title'>{{ event_title }}</p>
+
+                    <div class="see_all">
+                        <a class="" href="{{path('app_evenements_index')}}">Toutes</a>
+                    </div>
+                    
+                    <div class="see_all" role="group" >
+
+                            {% for cat in categories %}
+
+                        <a class="" href="{{path('app_evenements_index',{'cat': cat.titre})}}">{{cat.titre}}</a>
+                
+                            {% endfor %}
+                    </div>
+        
+                </div>
+
+                <div class="event_card_container">
+                     
+                    {% if evenements %}
+                 
+                        {% for evenement in evenements %}
+
+                            {% if evenement.date <  date('now') %}
+
+                                <div class="next_event_card DatePassee">
+                                    <a href="{{path('app_fiche_evenement',{'titre': evenement.titre})}}">   
+
+                                        <div class="card_header">{{ evenement.titre }}</div>
+                                        <div class="card_img">
+                                            <img src="{{ asset('images/upload/' ~ evenement.images) }}">
+                                        </div>               
+                                        <div class='card_details'>
+                                            <div class='card_details_inner'>
+                                                <div>{{ evenement.date|date('d-m-Y') }}</div>
+                                                <div class="card_categorie">{{ evenement.categorie.titre }}</div>
+                                                <div class="card_more">
+                                                    <div class="card_description">{{ evenement.description }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="card_price">
+                                                <p class='card_price_inner'>{{ evenement.prix }}€</p>
+                                            </div>
+                                        </div>                 
+                                    </a>
+                                </div>
+
+                            {% else %}
+
+                                <div class="next_event_card">
+                                    <a href="{{path('app_fiche_evenement',{'titre': evenement.titre})}}">   
+
+                                        <div class="card_header">{{ evenement.titre }}</div>
+                                        <div class="card_img">
+                                            <img src="{{ asset('images/upload/' ~ evenement.images) }}">
+                                        </div>               
+                                        <div class='card_details'>
+                                            <div class='card_details_inner'>
+                                                <div>{{ evenement.date|date('d-m-Y') }}</div>
+                                                <div class="card_categorie">{{ evenement.categorie.titre }}</div>
+                                                <div class="card_more">
+                                                    <div class="card_description">{{ evenement.description }}</div>
+                                                </div>
+                                            </div>
+                                            <div class="card_price">
+                                                <p class='card_price_inner'>{{ evenement.prix }}€</p>
+                                            </div>
+                                        </div>                 
+                                    </a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    {% else %}
+                        
+                        <div class="next_event_card">
+                            <div class="card_header">Il n'y a pas d'évènement</div>
+                            <div class="card_img">prévu prochainement</div>
+                            <div class="card_more">
+                                <div class="card_description">pour le moment</div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

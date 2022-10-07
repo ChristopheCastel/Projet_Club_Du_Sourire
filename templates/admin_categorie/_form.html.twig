@@ -1,0 +1,42 @@
+<a class="btn btn-primary mb-3" role="button" href="{{ path('app_admin_categorie_index') }}"><i class="fa-solid fa-arrow-left"></i> Retour à la liste</a>
+
+    
+<div class="col-xs-12 col-lg-8 col-xxl-6 shadow p-4 my-3 bg-body rounded">
+    
+    {{ form_start(form) }}
+        
+        
+        {{ form_row(form.titre) }}
+
+        {% if form.imageUpdateCategorie is defined %}
+   
+            {{ form_row(form.imageUpdateCategorie) }}
+        
+            <div class="text-center" id="zoneImg">
+
+                {% if categorie.image %}
+
+                    <img src="{{ asset('images/uploadCategorie/' ~ categorie.image) }}"  width="300px" alt="">
+
+                    <a href="{{ path("image_supprimer", {"id" : categorie.id }) }}"
+                    onclick="return confirm('Souhaitez-vous vraiment supprimer cette image ?');">
+                    <i class="fa-solid fa-trash-can text-danger"></i>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% elseif form.image is defined %}
+
+            {{ form_row(form.image) }}
+                <div class="text-center" id="zoneImg">
+                </div>
+                        
+        {% endif %}  
+
+        <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+
+    {{ form_end(form) }}
+
+</div> 
